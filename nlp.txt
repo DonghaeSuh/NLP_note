@@ -1,0 +1,450 @@
+https://wikidocs.net/book/2155  (딥러닝, 자연어 처리 입문 개념 소개)
+https://www.youtube.com/watch?v=kWiCuklohdY (파이썬 기본 배우기)
+https://www.youtube.com/channel/UChflhu32f5EUHlY7_SetNWw (인공지능 논문 )
+데이콘 dacon.io
+https://captcha.tistory.com/49 (도커 명령어 정리) + https://www.daleseo.com/dockerfile/
+
+파이토치 : 최성철교수 (boost course) 
+
+
+인공지능 그림 잘나와있는 설명
+https://stanford.edu/~shervine/l/ko/teaching/cs-230/
+------------------------------------------------------------
+-----------------------------------------------------------------
+
+
+
+
+도커 열기
+docker run -it --rm ratsgo/embedding-cpu bash
+도커 내에서 작업 => python3 실행 => 코드작업
+
+파이선 열기 옵션 (https://rfriend.tistory.com/523) 
+
+리눅스 파이썬 파일 만들기 (https://angliss.cc/making-pyfile-at-linux/)
+
+pip : 파이썬으로 작성된 패키지 라이브러리를 관리해주는 시스템
+apt : advanced package tool  : 업그레이드 , 다운그레이드 관리 , 패키지 검색,설치
+   + apt-get은 시스템의 핵심 측면을 다루기 때문에 관리 (슈퍼 유저) 권한이 필요하므로 Ubuntu 또는 Ubuntu 기반 배포에서는 대부분의 명령 앞에 "sudo"를 붙여야 함
+        (https://blog.naver.com/PostView.nhn?blogId=crehacktive3&logNo=221788406618&parentCategoryNo=&categoryNo=9&viewDate=&isShowPopularPosts=true&from=search)
+
+
+
+
+  
+--------------------------------------------------------------------------------------------------------------------------------
+20210812
+ 
+형태소 분석  ==> 한국어는 한정된 종류의 조사와 어미를 자주 이용  
+=> 각각에 대응하는 명사,용언(동사,형용사),어간만 어휘 집합에 추가하면 취급 단어개수를 줄이는 것이 가능 => 효율성 업
+1. 지도학습(supervised learning) 기반 형태소 분석
+  - tagging : 모델 입력과 출력 쌍을 만드는 작업
+
+  => KoNLPy(코에넬파이) : 은전한닢,꼬꼬마,한나눔,Okt,코모란등 5개 오픈소스 형태소 분석기를 파이썬환경에서 사용가능하게 만든 한국어 자연어 처리 패키지.
+   
+  ++colab에서 실행할거면 (https://riverside13.tistory.com/entry/colab%EC%97%90-konlpy-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0?category=658870) 참조
+
+ + 은전한닢 품사태그 https://docs.google.com/spreadsheets/d/1OGAjUvalBuX-oZvZ_-9tEfYD2gQe7hTGsgUpiiBSXI8/edit#gid=0
+
+
+
+ 형태소 분석에서의 주의점!
+    => 특정 단어 ex 가우스전자 를 원하지만 그냥 형태소 분석을 하면 가우스, 전자로 나뉨.  이때 '가우스전자' 를 하나의 토큰으로 분석되게 강제
+    => 사용자 사전
+
+
+2. 비지도학습(unsupervised learning)기반 형태소 분석
+  - soynlp (https://github.com/lovit/soynlp)
+     => 어느정도 규모가 있으면서 동질적인 문서집합에서 잘 작동
+         1. 데이터의 통계량 확인=> 단어 점수 표로 작동
+         2. 단어 점수는 '응집확률 => 유기적으로 연결돼 함께 자주 나타남' 과 '브랜칭 엔트로피=> 한 단어 앞뒤로 다양한 조사,어미,다른 단어가 등장하는 경우' 를 활용
+                         
+
+   - 구글 센텐스피스
+   //모르는 단어 등장 => OOV(out of vocabulary) 문제
+                => Subword segmentation => 하나의 단어는 더 작은 단위의 의미있는 여러 서브워드들로 나뉘는 경우가 많음 => 이를 활용해 전처리
+                       대표적인 것이 BPE : Byte Pair Encoding 알고리즘 (https://wikidocs.net/22592)
+                               : 연속적으로 가장 많이 등장한 글자의 쌍을 하나의 글자(Byte)로 병합하고 이를 최대한으로 수행함. 
+                                      => 이걸 연속적으로 해가면서 voca에 있는 알파벳과 알파벳 쌍(pair)을 업데이트 하여 늘린다. 
+                                      => 새로운 단어가 들어와도 업데이트 된 voca에 있는 byte 조합을 통해 만들어 낼 수 있다면 존재하는 단어로 판단.
+
+    + 구글이 공개한 BERT 모델 코드에는 BPE로 학습한 어휘 집합으로 토큰을 분리하는 클래스(FullTokenizer)가 포함됨.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+20210815
+
+ -soynlp 띄어쓰기 교정 : 학습 데이터에서 앞뒤 공백이 많이 나타난 경우 띄어쓰기 학습
+
+ 
+ 4.1 NPLM
+    -> 기존 언어모델의 한계를 일부 극복하고자 함
+     [기존 단어모델 문제]
+           : 학습 데이터에 존재하지 않는 n-gram이 포함된 문장이 나타날 확률=0 인 문제 : back-off 나 smoothing이 있지만 완전하지 않음
+           : 문장의 장기 의존성(long-term dependency) 포착 어려움 (=n-gram 모델의 n을 5 이상으로 길게 설정할 수 없음. => n이 커질수록 그 등장 확률이 0인 단어시퀀스가 기하급수적으로 늘어남.)
+           : 단어/문장 간 유사도 계산 불가
+   //20210816//
+     => 앞서 딥러닝 학습 이해 + 역전파(https://wikidocs.net/37406)
+     => 해결 : 문장중 비슷한 부분이 많다면 옳은 문장이라고 판단.ㄴ
+           
+
+ 4.2 Word2Vec
+   Mikolov et al(2013b) 
+   Skip-gram으로 학습 => 학습량 어마어마 (단어별로 슬라이딩하면서 학습)
+  => but 타깃 단어로 문맥 단어 출력하는 모델 만들때 가능 어휘가 너무 많음
+                => 단어 쌍을 +,-  이진불류    => 샘플을 분리 (= negative sampling)   + 이해 도움(https://wikidocs.net/69141)
+
+   =>희귀한 단어가 네거티브 샘플로 더 잘 뽑일수 있도록 설계 + 자주 등장하는 단어는 학습에서 제외(subsampling) : Skip-gram은 학습량이 많기 때문에 고빈도 단어를 모두 학습하는 것은 비효율
+
+   +모델학습
+     skip-gram 모델은 타깃 단어와 문맥 단어 쌍이 주어졋을 때 해당 쌍이 포지티브 샘플인지 아닌지를 예측하는 과정에서 학습됨
+       u: 타깃 단어에 해당하는 행벡터,v: 문맥단어에 해당하는 열벡터
+       => 결국 positive sample t와c에 해당하는 단어 벡터간 유사도를 높임. = 단어벡터간 코사인 유사도 높임
+           (반대도 성립)
+
+  +로그 우도 함수 (log-likelihood function))
+      우도함수는 0에서1의값을 갖기 떄문에 계산 불편 => 로그를 취해 계산 용이 + 확률 곱을 합으로 변환 가능
+
+
+   20210817
+    midir 명령어 (make directory)  (https://grace8snorlax.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EB%AA%85%EB%A0%B9%EC%96%B4-mkdir)
+
+
+
+
+
+
+
+
+root@9796d0a02f0a:/notebooks/embedding# python models/word_utils.py --method train_word2vec --input_path data/tokenized/ratings_mecab.txt --output_path data/word-embeddings/word2vec/word2vec
+root@9796d0a02f0a:/notebooks/embedding# from models.word_eval import WordEmbeddingEvaluator
+bash: from: 명령어를 찾을 수 없음
+root@9796d0a02f0a:/notebooks/embedding# python3
+Python 3.5.2 (default, Nov 23 2017, 16:37:01)
+[GCC 5.4.0 20160609] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from models.word_eval import WordEmbeddingEvaluator
+>>> model = WordEmbeddingEvaluator("/notebooks/embedding/data/word-embeddings/word2vec/word2vec",method="word2vec",d
+im=100,tokenizer_name="mecab")
+>>> model.most_similar("희망",topn=5)
+[('젊음', 0.7291286), ('가르침', 0.7263433), ('외로움', 0.717378), ('절망', 0.7171122), ('신념', 0.71187747)]
+>>> model.most_similar("젊음",topn=5)
+[('그리움', 0.8580534), ('일깨우', 0.8359076), ('갈망', 0.8349979), ('열망', 0.8276133), ('두근거림', 0.82716477)]
+
+
+
+  20210818 
+    for in 반복문 파이썬 https://wikidocs.net/16045
+
+ +.strip()은 무엇이냐?
+
+strip 함수는 문자열의 맨 앞과 맨 뒤의 whitespace 띄어쓰기 (''), 탭 ('\t'), 엔터 ('\n')를 제거시키는 함수이다.
+split 함수는 문자열의 특정 문자를 기준으로 문자열을 잘라서 배열(List) 형태로 만들어 주는 메서드!
+ readline() 은 텍스트를 한 줄씩 읽는 메서드
+
+
+  -i 옵션과 -t 옵션은 같이 쓰이는 경우가 매우 많은데요. 이 두 옵션은 컨테이너를 종료하지 않은체로, 터미널의 입력을 계속해서 컨테이너로 전달하기 위해서 사용합니다
+--rm 옵션은 컨테이너를 일회성으로 실행할 때 주로 쓰이는데요. 컨테이너가 종료될 때 컨테이너와 관련된 리소스(파일 시스템, 볼륨)까지 깨끗이 제거해줍니다.
+
+​
+
+  20210819 
+   PMI 점별 상호 정보량(Pointwise Mutual information) 두 단어의 등장이 독립일 때 대비해 얼마나 자주 같이 등장하는지
+   PMI(A,B) = log{P(A,B)/P(A)xP(B)}
+        => 하지만 PMI 가 음수가 되는 경우는 옳은 정보라고 신뢰하기 어려움 (기본적으로 P(A,B) 가 10억분의 1보다 작은경우가 별로 없어서, 분자가 0이 될경우 log는 -무한대로 발산)
+                 => PPMI 사용 (양의 점별 상호 정보량)    
+  
+  LSA (lament sementic analysis ) 잠재의미분석     , DTM (Document-Term Metrix) 문서 단어 행렬
+
+  행렬 sum 자료 (http://taewan.kim/post/numpy_sum_axis/#fn:1)
+
+  20210820
+    SPMI 정리
+
+  20210821
+  
+  GloVe
+    : 임베딩된 단어 벡터 간 유사도 측정을 수월하게 하면서도 말뭉치 전체의 통계 정보를 좀더 잘 반영해보자.
+
+   목적함수 :  어떤 벡터변수(혹은 행렬)이 있을 때, 그 벡터변수가 어느 영역 R에 속한다고 할 때, 
+벡터변수를 매개변수로 갖는 함수 f(x)의 최댓값, 혹은 최솟값을 주는 문제를 선형계획문제라고 한다. 
+여기서 함수 f를 목적함수라고 한다.
+   
+   matrix factorization (행렬분해)   => 원리 https://yeomko.tistory.com/5
+   경사하강법 여러종류 (https://twinw.tistory.com/247)  (https://seamless.tistory.com/38)    SGD 유도 (https://brunch.co.kr/@chris-song/50)
+   벡터 미분 (https://darkpgmr.tistory.com/141)
+  
+  20210822
+  벡터 미분 확인
+  최소 제곱법 (https://youngji.medium.com/%EC%B5%9C%EC%86%8C%EC%A0%9C%EA%B3%B1%EB%B2%95-least-squared-method-f7357990329f) 선형대에 나옴
+
+
+  20210823 
+  ALS (https://yeomko.tistory.com/4?category=805638) matrix factorization 업데이트에 사용되는 방법중 하나 1.GD or SGD 2. ALS -> 장점 : 희소행렬에 0인부분도 가중치를 조금이나마 가해주는것 가능 => 병렬 계산(두벡터가 연산에 참여하고 연관됨) 에 용이  (이유: 하나 고정시켜놓고 다른것 최적화 이후 바꾸어 이번꺼 고정시켜놓고 저번거 최적화 번갈아 수행 => 속도향상)
+
+
+  20210824
+  
+ one-hot vector 로 단어를 표현하면 단어간 유사성 표현 불가 => 단어의 '의미'를 다차원 공간에 벡터화 하는 방법(분산 표현) 을 이용해 단어 벡터를 표현 => 단어간 동시등장 빈도수 이용(window 이용하여 가깝게 등장하는 경우를 카운트)
+   
+  GLove : 임베딩 된 중심단어와 주변단어벡터 내적이 전체 코퍼스에서의 동시 등장 확률이 되도록 만드는 것
+
+  + 소프트맥스(출력함수) 시그모이드(은닉층 활성화함수) 차이점
+     Word 에 표있음
+
+  Word2Vec CBOW에서는 최종 출력에 소프트맥스씀 , Skipgram에서는 시그모이드 씀(예외: https://reniew.github.io/22/)=> 이를통해 이진분류(0.5를 기점으로) 사용하여 에러를 줄여나감
+   
+  Word2Vec은 딥 러닝 모델(Deep Learning Model)은 아니라는 점입니다. 보통 딥 러닝이라함은, 입력층과 출력층 사이의 은닉층의 개수가 충분히 쌓인 신경망을 학습할 때를 말하는데
+   Word2Vec는 입력층과 출력층 사이에 하나의 은닉층만이 존재합니다. 
+   이렇게 은닉층(hidden Layer)이 1개인 경우에는 일반적으로 심층신경망(Deep Neural Network)이 아니라 
+   얕은신경망(Shallow Neural Network)이라고 부릅니다.   (https://wikidocs.net/22660)
+
+
+  bash 셀에서 verbose :  구축과정을 화면에 출력할지 여부를 정하는 파라미터
+
+
+
+  20210827
+  WORKDIR 에서 변경하고 나가는 방법 https://www.tecmint.com/exit-file-in-vi-vim-editor-in-linux/
+  swivel 파일없음 해결 -> word에 저장
+  glove도 해결
+  텐서플로우 다운그레이드 pip install tensorflow-gpu==1.13.1   //https://hansonminlearning.tistory.com/37// 
+
+  20210831
+  확률을 누적해서 곱하는 것은 컴퓨터 연산에서 그 ㄱ밧이 너무 작아지는 언더플로(underflow)문제가 발생= > 보통은 로그를 취해 덧셈을 하는 것으로 대체한다.
+
+
+
+  20210904
+  
+  가중 임베딩 제대로 이해하기
+    (https://bab2min.tistory.com/631)
+
+  논문 'A SIMPLE BUT TOUGH-TO-BEAT BASELINE FOR SENTENCE EMBEDDINGS'  (Arora et al., 2016)
+  
+   여기서 discourse vector 'c' 이해가 필요
+    다음 페이지 Answer 참조  https://stackoverflow.com/questions/48458183/what-does-discourse-vector-mean-in-word-sentence-embedding
+
+    일단 모든 corpus의 point (벡터 공간 상 단어 들의 위치)는 micro-topic을 포함하고 있다. 
+    (우리는 단어-단어 빈도에서 단어의 의미 유사도를 어느정도 찾을 수 있었다.
+     그리고 이 빈도를 측정할 때 window를 통해 결정했고, 이 window는 문장의 부분집합이다.
+     그러므로 이를 이용해 문장이 말하고자 하는 바는 문장 안에 등장하는 단어가 micro하게 담고 있을 것이다.
+      또한 우리는 이웃하여 등장하는 단어를 유사한 벡터로 만들었고
+      유사한 벡터들은 비슷한 공간안에 위치하므로
+      단어들의 공간안에서의 분포는 문장의 주제를 담고있다고 말한다.)
+      
+       그래서 논문 Linear Algebraic Structure of Word Senses, with Applications to Polysemy" by Sanjeev Arora. 에서
+       Each discourse 'c' defines a distribution over words Pr[w | c] ∝ exp(c · Vw). 라는 말이 등장한다
+
+       그렇다면 이 c는 어떻게 고정될 수 있을까?
+       1. 단순히 벡터들 다 더하고 평균내는것(MLE 최대우도법)
+       2. 벡터들을 더하고 평균 낼 때, 단어마다 가중치를 주어서 품질을 높이는 방법
+
+
+     20210905 
+    로그 선형에 대하여
+    (https://igija.tistory.com/172)   => 기하급수적 증가와 같은 제곱 형식의 그래프에 로그를 씌어주면 직선이 된다
+                                                    => 선형으로 만드는 것이 가능해짐
+
+     + 
+로그, 제곱, 제곱근(루트)은 다 친구다.
+
+다 ax = b 이 관계에서 파생된다.
+
+ - 이 관계에서 b를 구하는게 제곱이다. (a를 x번 곱하면 얼마?)
+
+ - 이 관계에서 a를 구하는게 루트다. (어떤 수를제곱해야 b가 되지?)
+
+ - 이 관계에서 x를 구하는게 로그다. (a의 몇제곱이 b가 되지?)     
+
+    가중임베딩 이어서
+
+    논문 내 common discourse vector c0 에 대한 정확한 설명
+    The top singular vector c0  of the datasets seems to roughly correspond to the syntactic information or common words. 
+    Closest words (by cosine similarity) to c0  in the SICK dataset are: "just" "when" "even" "one" "up" "little" "way" "there" "while" "but".
+    논문 내   "In fact the new model was discovered by our detecting the common component c0 in existing embeddings." in section "Computing the sentence embedding"
+     에 대한 설명 We meant to say that we empirically discovered the significant common component  in word vectors built by existing methods, which inspired us to propose our theoretical model of this paper
+
+   해당 논문 openreivew 
+       https://openreview.net/forum?id=SyK00v5xx
+
+
+    python numpy 
+    shape[0], shape[1]를 이용하여 전체 행의 갯수와 열의 갯수를 반환받을 수 있다.
+     출처: https://barambunda.tistory.com/11 [바람이 분다]
+
+      a = np.array( [ [1,2,3],[4,5,6],[7,8,9],[10,11,12] ])
+     # a 는 3 x 3 행렬로 구성됨.
+      print(a.shape)
+
+      print 결과는 (4,3 ) 임.
+
+      np.count_nonzero(a)   : 배열 a의 0이 아닌 값의 개수를 계산
+
+
+
+  20210906 
+   svd 차원축소를 깔금하게 설명  https://www.youtube.com/watch?v=UPc0I1Kx_H8   + https://luminitworld.tistory.com/69
+
+   pca 설명 https://gentlej90.tistory.com/15 (좀 길고, 선형대 내용 떠올려야함)
+  
+ 차원축소 방법
+   Feature extraction   or Feature selection
+
+  특징을 어케 줄일것인가. o차원수를 낮춰 농밀하게 표연할 것인가     or      필요한 것만 선택할 것인가(모든 Feature 의 공통된 부분들을 없에 구분이 잘 되는 feature만 남기겠다(SIF에서 마지막에 한 짓)
+                                                                                                       =>공통된 부분만 남겨 사진을 분해하는 방법도 있음 (https://angeloyeo.github.io/2019/08/01/SVD.html)
+  pca는 feature extraction이다. 
+  이는 전체 feature 을 가장 잘 나타내느 더 작은 차원의 feature들을 찾겠다는 것이다.
+ 
+  => 즉 pca는 데이터의 분포의 특성을 가장 잘 나타내는 벡터를 찾는 것이다 (여기에 사영하면 원래 분포의 특성이 잘 나타날 것이다)
+ 
+   행렬 분해에서 고윳값행렬 의 고윳값은 1,1이 가장크고 2,2, 3,3,으로 갈수록 점점 줄어든다
+
+  주성분끼리의 직교 => 특징의 중복표현을 없앤다. => 잘 표현한다.(최소한의 변수로)
+   => 주성분의 최대개수 = feature의 차원수
+  
+
+  //pca 여기선 공분산 말고 그냥 특이값을 이용해 분산 구함
+
+
+   20210909
+  
+ 머신러닝 개념 이해 및 회귀, softmax 이해
+   hyperparameter : 사람이 정하는 변수(학습 과정에 포함되는 변수중)   // 매개변수 : 기계가 훈련을 통해서 바꾸는 변수(가중치 등 )
+
+  머신러닝 
+   이전 문제 : 사진을 보고 고양이인지, 강아지인지 구분 
+     =>이전방법은 shape,edge등의 경향을 수치화하여 만듬 하지만 이로써는 부족(이는 인간이 포착한 특징임 차원이 낮은 해결책)
+  
+   문제 해결 방식의 변환
+     Data => 인간이 구한 함수   => 해답
+
+    머신러닝 :  
+     Data + 해답 => 학습  => 규칙성 반환
+
+     
+     1. Data의 성질변화.  (훈련용, 검증용, 테스트용)
+      
+       가장먼저 훈련용 학습 
+             
+         이후 검증용 Data 사용 => 정확도 검증 : 가장 이상적인 Data들이 검증용 Data로 사용되면 좋지 않을까? 
+      검증용이 필요한 이유 : 과적합 방지, 원하는 목적에 맞게 hyperparameter 조정(튜닝이라고 함 : tuning) => 정확도 향상이라고 볼 수 있음
+      
+         이후 아직까지 보지 못한 데이터를 가지고 모델 평가  : 테스트용 데이터
+ 
+      검증용 없이 훈련, 테스트만 하기도 함
+
+      2. 분류(classification)와 회귀(Regression)
+
+          선형 회귀 => 회귀문제 학습      / /   로지스틱 회귀 => 이진 분류 학습
+
+          분류  => 이진분류(Binary Classification) or 다중 클래스 분류(Multi-class Classfication)  :  두개 이상의 선택지 중에서 하나의 클래스로 답을 분류 + multi-lable Classfication
+
+          회귀 문제(Regression)  분류와 달리 연속적인 값을 결과로 반환
+      
+    
+    에포크(epoch)는 전체 훈련 데이터에 대한 훈련 횟수  => 이를 X출으로 loss를 Y축으로 하는 그래프들 만흥ㅁ
+    
+       
+     3. 선형회귀(Linear Regression)
+           단순선형회귀 y = Wx+b // 다중선형회구 y= W1x1+W2x2+ ... +b
+
+         1. 가설세우기 (독립변수에 따른 종속변수의 관계(현재 얻어온 데이터에 따른))
+
+          실제값과 예측값에 대한 오차에 대한 식 : 목적함수: 목적을 위한 함수 , 비용함수(다변수) , 손실함수(일변수)
+
+       
+        회귀 문제에는 평균 제곱 오차(Mean Squared Error, MSE)가 주로 사용됨
+            => 오차의 제곱 평균을 최소화하는 W,b 구하기
+
+       or 경사하강법(Optimizer) 최적화 알고리즘
+                  준비물 :   애러 코스트 함수의 가중치에 대한 편미분, 가중치(변수), step(너무 크면 안되고 너무 작으면 느림
+
+
+
+      4. 로지스틱 회귀(Logistic Regression)
+
+             이진분류에 로지스틱 회귀 쓴다.
+         시그모이드 에 Wx+b 의 W는 시그모이드 함수의 0 기준 기울기,경사도 // b는 평행이동 b가 클수록 왼쪽으로 이동 => 입력값이 적어도 0.5 이상일 범위 증가
+
+         이때 평균제곱오차 사용 x => 로컬 미니멈에 갇힐 경우가 많음(gradient descent 할때)
+         = >새로운 목적함수 이용 https://wikidocs.net/22881
+            로지스틱 회귀에서 찾아낸 비용 함수를 크로스 엔트로피(Cross Entropy)함수
+ 
+
+     5. 소프트맥스 회귀 (다중 클래스 분류) 이전에는 2개의 선택지 중에서 1개를 고르는 이진분류였지만, 이제 3개 이상 선택지
+
+     신경망 통한 soft regression (https://lovit.github.io/nlp/machine%20learning/2018/03/22/logistic_regression/)
+     대표벡터를 통한 logistic regression soft regression (https://lovit.github.io/nlp/machine%20learning/2018/03/22/logistic_regression/)
+
+
+     6. 잠재 디리클레 할당 LDA(Latent Dirichlet Allocation) https://bab2min.tistory.com/568
+
+      + 깁스 샘플링을 3. LDA의 수행하기 에서 이헤 가능
+   
+ 
+   20210911
+    ELMo 시작 . NPLM과 LSTM 구분
+   
+   기본개념 완벽 이해 
+       + CNN  https://dgkim5360.tistory.com/entry/convolutional-neural-networks-a-modular-perspective-kr?category=912687
+                    => 이것이 더 나음 https://halfundecided.medium.com/%EB%94%A5%EB%9F%AC%EB%8B%9D-%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-cnn-convolutional-neural-networks-%EC%89%BD%EA%B2%8C-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-836869f88375
+                           + 최종 활용 https://stanford.edu/~shervine/l/ko/teaching/cs-230/cheatsheet-convolutional-neural-networks
+                정리 
+                   1. 원본, 필터 준비 
+                   2. convolution 하기 전 필요한 조정  => zero padding (손실 보존 : 테두리의 정보가 제대로 포함되지 않는 것을 보완)
+                                                                => stride 설정
+                                                                => 차원 설정 (0,1의 검,흰 구분 : 2차원  // RGB 구분 : 3차원   => 차원당 겹으로 쌓아서 표현
+                   3. convolution 을 10번하여 10개의 결과 만듬+ 결과에 활성화 함수 적용(Activation function) ex) ReLU,sigmoid)
+                   4. pooling : 행렬 축소 (Max Pooling or Average Pooling) => 정보가 4배 응축됨
+                   5. 여기에 convolution 20번 => 20개의 결과
+                   6. pooling 
+                   7. Flatten(Vectorization)  => 모든 열을 뽑아(행을 뽑기도 함) 한줄로 표현 => 한개의 vector가 됨
+                   8. FC(Fully Connected Layers)  : 이전 벡터의 각 노드와 부터 다음 층(원하는 만큼의 벡터 차원)의 모든 노드를 연결 후 활성화 함수를 통해 다음 층에 값을 정함 => 이후 softmax를 써서 최종 원하는 차원 만큼의 결과를 만들어 냄(전체 합이 1인)
+                  
+        + RNN :  https://ratsgo.github.io/natural%20language%20processing/2017/03/09/rnnlstm/        
+                         https://wikidocs.net/22886
+              
+                 hidden state h가 직전 시점의 hidden state h의 영향을 받아 갱신됨으로써 순서 고려가능해짐(이전값을 무엇을 받아오는 지가 다음 결과에 영향을 주기 때문)
+                
+                하지만 h는 이전 상태와 현재 상태를 이어주지만 그 거리가 너무 멀게 되면 gradient vanishing 발생(0<=1인 값을 계속 곱하니 값이 작아질 수 밖에 없음)
+                여기에 hidden state 에 cell-state 추가
+          lstm : https://wikidocs.net/22888
+
+
+
+   20211008
+
+     sequence to sequence  (seq2seq)
+   : encoder 와 decoder 로 구성 , 사이에 context vector 가 이어줌(encoder를 통해 나온 벡터)
+   
+     -- context vector : encoder lstm(rnn)셀의 마지막 시점의 은닉 상태
+    -- encoder : input을 여러개로 쪼개 벡터로 표현 => 차례로 lstm 셀에 집어넣음
+    -- docoder : 초기입력 <sos>가 들어가고 이에 따른 출력을 원하는 값의 가장 첫번째 값이 출력되도록 (교사 강요) 함.  => 차례로 원하는 출력에 따른 벡터를 차례로 출력하도록  => 마지막 출력 벡터를 decoder lstm 셀에 넣으면 <eos> 가 출력되도록 학습
+
+   
+
+    transformer
+
+  rnn,lstm 사용 안함 => 시간에 대한 정보 담지 못함 => 이를 임베딩 matrix를 거친 후에 positional encoding(임베딩 matrix와 같은 차원)을 더해줌 
+                                    =>어텐션 사용(각 단어어 서로서로 attention score를 구함 , 각 단어가 서로 어떤 연관성을 가지는지 => 문맥 의미를 담는다.
+   
+   20211112
+
+    attention : 디코더의 매 시점에서 인코더의 전체 입력 문장 중 예측해내야 하는 단어와 연관된 입력단어에 가중치 부여
+                FC 신경망 연산은 차원을 조절하는 역할을 할 수 있다.
+	  순서 : 
+                    1. Q, K, V 사전 형태, Q : 현재 시점 t의 디코더셀의 은닉 상태,  K, 인코더 셀의 모든 은닉상태들의 라벨, key의 개수 : 단어의 개수,  V : 각 key에 해당하는 Q에대한 Value(softmax를 거쳐 0과1사이의 값으로 표현됨 => 즉 현재 디코더에 입력된 단어와 유사한 확률이 Value로 표현됨)
+                    2. 디코더에서 단순 lstm셀의 은닉층 뿐만 아니라 각 디코더 시점마다 앞서 인코더에 입력된 전체 문장을 다시한번 참조. -> 인코더에 입력된 단어들 중, 현재 디코더에서 처리되고 있는 단어와 유사한 단어들의 정보를 추가로 제공해줘서 다음 단어 예측 능력을 높임
+                    3. 디코더에서 처리하고 있는 단어와 유사한 단어를 인코더에 입력된 단어로부터 찾기 위해 코사인 유사도를 활용함. => 내적을 하여 계산   : 디코더 은닉층 하나 : 각 인코더 은닉층 간의 내적, 벡터로 표현(입력 단어의 개수만큼의 차원을 가짐) => softmax => 확률로 표현됨 : 각 key(단어)에 해당하는 Value(단어 유사 정도)벡터가 된다.
+                    4. 이떄 이 정보는 기본 디코더의 은닉층 벡터에 꼬리붙이기 식으로 합쳐짐(concatenate)된다. 하지만 신경망 연산을 한번 더하여서 벡터 차원을 우리가 원하는 형태로 조정
+                    5. 결과를 얻는다.
+
+
+  20211116 
+    position embedding : 위치에 대한 값을 넣어줌 => lstm제거한 것을 보정시켜줌
+
+
+  20211227
+GPT 
+unlabled dataset이 정말 많이 존재.
+Language model (LM) 단어 sequence, 문장에 확률을 부여하는 것, 올바른 문장을 찾는것, 단어 뒤 다음 단어를 찾는 과정에 확률을 적용 
