@@ -28,7 +28,7 @@ GRU, LSTM, Attention
 
 
 -----------------------------------------------------------------------------------------------------------
-((((((((((((((((20220201)))))))))))))))))))))))
+((((((((((((((((20220201)))))))))))))))))))))))  복습 1/
 
 /////////////////////////////
 konlpy 에 대해
@@ -69,22 +69,21 @@ khaiii: 카카오에서 가장 최근에 공개한 분석기, 성능이 좋다�
 
 
 
-re.sub(pattern, repl, string, count=0, flags=0)
+re.sub(pattern, repl, string, count=0, flags=0)   # count는 음수가 아닌 정수, count가 0 또는 생략이면 찾은 문자열을 모두 치환.
+
 
 re.sub('패턴', '바꿀문자열', '문자열', 바꿀횟수)
 
  + 정규식 사용해 특수문자 제거 : https://www.delftstack.com/ko/howto/python/remove-special-characters-from-string-python/
-
+                                         https://www.fun-coding.org/DS&AL3-4.html
 ex)
 
 import re
 
 string = "Hey! What's up bro?"
-new_string = re.sub(r"[^a-zA-Z0-9]","",string)
+new_string = re.sub(r"[^a-zA-Z0-9]","",string)  #문자(a-z,A-z, 숫자(0-9)가 아닌것(^)을  => "" (무)로 치환 => 특수문자 삭제
 print(new_string)
 
-
-count는 음수가 아닌 정수, count가 0 또는 생략이면 찾은 문자열을 모두 치환.
 
 
 ///////////////
@@ -94,7 +93,7 @@ split 함수는 a.split()처럼 괄호 안에 아무 값도 넣어 주지 않으
 만약 b.split(':')처럼 괄호 안에 특정 값이 있을 경우에는 괄호 안의 값을 구분자로 해서 문자열을 나누어 준다.
 
 
-” “.join( list ) : 리스트에서 문자열으로
+” “.join( list ) :  리스트 형태의 각각의 문자열을 " " (공백)을 사이에 두고 붙임 ==>리스트에서 문자열으로  
 
 ///////////////
 
@@ -180,5 +179,46 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 vocab_size = len(tokenizer.word_index) + 1 #모델에 알려줄 vocabulary의 크기 계산
 X_train = pad_sequences(train_X_seq (정수 index로 표현된 문장) , maxlen = max_len) #설정한 문장의 최대 길이만큼 padding
 
+
+
+((((((((((((((((((((((((((((((((20220202)))))))))))))))))))))))))))))))))))))))))))))
+
+
+///////////////////////
+파이썬 scipy 희소생렬 : https://radish-greens.tistory.com/1
+////////////////////////
+
+2|4|4|0
+0|0|1|1
+0|0|0|5
+
+행렬을 COO matrix로 표현
+
+from scipy.sparse import coo_matrix
+
+row = [0, 0, 0, 1, 2] # 행 인덱스를 담은 리스트
+col = [0, 1, 2, 2, 3] # 열 인덱스를 담은 리스트
+data = [2, 4, 2, 1, 5] # 원소 값을 담은 리스트
+
+m = coo_matrix((data, (row, col)))
+m
+
+ 0이 아닌 원소 값 5개의 행 인덱스를 row에, 열 인덱스는 col에 담았습니다. 이를 scipy.sparse.coo_matrix에 넘겨주면 희소행렬이 만들어진다.
+
+이 구조는 sklearn의 Vectorizer를 통해 .fit_transform(tokens)를 통해 나온 행렬을 이해하는데 사용
+=> 저 값을 .toarray() 해주면 우리가 아는 행렬형태로 볼 수 있음( 2D array형태로)
+
+
+
+//////////////////////
+word2vec : https://dreamgonfly.github.io/blog/word2vec-explained/
+               https://dacon.io/competitions/official/235670/codeshare/1892?page=1&dtype=recent
+               http://doc.mindscale.kr/km/unstructured/11.html (자세하게 잘되어있음)
+///////////////////////
+
+
+///////////////////////
+파이썬 for in enumerate()   :  https://www.daleseo.com/python-enumerate/
+///////////////////////
 
 
