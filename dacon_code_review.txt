@@ -269,3 +269,33 @@ asarray() 함수  : https://studymake.tistory.com/406
 arr : 기본 array
 할당값 = asarray(arr)   :  arr를 참조  => arr값을 바꾸면 이 할당값 내부도 변한다.
 할당값 = array(arr)      :  arr를 복사하여 전달 =>  arr값을 바꾸어도 안변함
+
+
+
+(((((((((((((((((((((((((20220204))))))))))))))))))))))))))))))))))))))))
+
+/////////////////////////
+Dropout()                      : https://stackoverflow.com/questions/50393666/how-to-understand-spatialdropout1d-and-when-to-use-it
+SpatialDropout1D() 차이점
+/////////////////////////
+
+To make it simple, I would first note that so-called feature maps (1D, 2D, etc.) is our regular channels. Let's look at examples:
+
+Dropout(): Let's define 2D input: [[1, 1, 1], [2, 2, 2]]. Dropout will consider every element independently, and may result in something like [[1, 0, 1], [0, 2, 2]]
+
+SpatialDropout1D(): In this case result will look like [[1, 0, 1], [2, 0, 2]]. Notice that 2nd element was zeroed along all channels.
+
+저기 내부에 0.2(20%로 0으로 떨굼) 등과 같은 rate 집어넣음
+
+//////////////////////
+Regularization  : https://wdprogrammer.tistory.com/33
+///////////////////////
+kernel_regularizer = regularizers.l2(0.001)
+regularizers.l2(0.001) : 가중치 행렬의 모든 원소를 제곱하고 0.001을 곱하여 네트워크의 전체 손실에 더해진다는 의미, 이 규제(패널티)는 훈련할 때만 추가됨
+
+
+//////////////////////
+optimizer : https://onevision.tistory.com/entry/Optimizer-%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%ED%8A%B9%EC%84%B1-Momentum-RMSProp-Adam
+//////////////////////
+
+
