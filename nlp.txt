@@ -448,3 +448,11 @@ split 함수는 문자열의 특정 문자를 기준으로 문자열을 잘라�
 GPT 
 unlabled dataset이 정말 많이 존재.
 Language model (LM) 단어 sequence, 문장에 확률을 부여하는 것, 올바른 문장을 찾는것, 단어 뒤 다음 단어를 찾는 과정에 확률을 적용 
+
+
+ 20220207
+
+BERT
+Elmo가 shoallowly bidirectional language model인 이유 : 양쪽 lstm의 정보를 모두 받아오기는 하지만, 각각 따로 만든다음 합치는 방식이기 때문에... // bert 같은 경우는 한번에 양쪽에서 받아오게 된다( 양 단어 사이에 빈공간을 채워넣는 방식이기 때문)
+
+
