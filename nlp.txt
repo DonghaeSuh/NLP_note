@@ -455,4 +455,66 @@ Language model (LM) 단어 sequence, 문장에 확률을 부여하는 것, 올�
 BERT
 Elmo가 shoallowly bidirectional language model인 이유 : 양쪽 lstm의 정보를 모두 받아오기는 하지만, 각각 따로 만든다음 합치는 방식이기 때문에... // bert 같은 경우는 한번에 양쪽에서 받아오게 된다( 양 단어 사이에 빈공간을 채워넣는 방식이기 때문)
 
+ 20220208
+자카드 유사도 (집합 유사 판정)
+(https://wikidocs.net/24654)
 
+
+Bert 논문속 
+attention is quadratic ⇒ ???
+
+[Rethinking Attention with Performers](https://ai.googleblog.com/2020/10/rethinking-attention-with-performers.html)
+
+: 1대1 비교를 해야하고, a를Query로 한 b(key)와의 유사도, b를Query로 한 a(key)와의 유사도를 따로 구해야 하므로,
+
+이 계산은 2자리 숫자의 연산과정하고 동일하다.
+
+ex) 어텐션을 하려는 문장에 들어있는 token의 개수를 5개라 하면,
+
+1:1,1:2,1:3,1:4,1:5
+
+2:1,2:2,2:3,2:4,2:5
+
+3.....’
+
+4.....
+
+5....
+
+이래 되므로 이는 for문 loop를 2번 감싸는 것과 동일하다.
+
+n = sequence_length
+
+for i in range(n):
+
+for k in range(n):
+
+i : k  = attention(i:k)
+
+이므로 O(n^2) 이게 된다.
+
+:
+
+attention scales poorly with the length of the input sequence, requiring *quadratic*
+ computation time to produce all similarity scores, as well as quadratic memory size to construct a matrix to store these scores.
+
+
+
+
+Bert 논문 내
+문제 2 
+
+sequence length 부분이 제대로 이해되지 않았음
+
+다음을 통해 해결
+
+[https://deview.kr/data/deview/2019/presentation/[111]+엄_청+큰+언어+모델+공장+가동기.pdf](https://deview.kr/data/deview/2019/presentation/%5B111%5D+%E1%84%8B%E1%85%A5%E1%86%B7_%E1%84%8E%E1%85%A5%E1%86%BC+%E1%84%8F%E1%85%B3%E1%86%AB+%E1%84%8B%E1%85%A5%E1%86%AB%E1%84%8B%E1%85%A5+%E1%84%86%E1%85%A9%E1%84%83%E1%85%A6%E1%86%AF+%E1%84%80%E1%85%A9%E1%86%BC%E1%84%8C%E1%85%A1%E1%86%BC+%E1%84%80%E1%85%A1%E1%84%83%E1%85%A9%E1%86%BC%E1%84%80%E1%85%B5.pdf)
+
+총 100만 STEP 중에
+
+90만 step은 1024(batch)x 128(sequence length)   이후 남은 10만 step은 256(batch)x512(sequence length)
+[https://github.com/google-research/bert/issues/969](https://github.com/google-research/bert/issues/969)
+
+: 중국어로 답변되어서 영어로 번역해야함.
+
+ ⇒ 짧게 sequence length로 줄이면 그 이후에 남는 (512-128) 개의 token들에 해당하는 positional encoding이 이루어지지 않으므로, 128개로 줄이고 줄어드는 만큼을 보완하기 위한 batch개수를 늘리는 것 뿐만 아니라, 나머지 10퍼센트정도라도 512로 학습을 해주어야 한다.
