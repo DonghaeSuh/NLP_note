@@ -518,3 +518,21 @@ sequence length 부분이 제대로 이해되지 않았음
 : 중국어로 답변되어서 영어로 번역해야함.
 
  ⇒ 짧게 sequence length로 줄이면 그 이후에 남는 (512-128) 개의 token들에 해당하는 positional encoding이 이루어지지 않으므로, 128개로 줄이고 줄어드는 만큼을 보완하기 위한 batch개수를 늘리는 것 뿐만 아니라, 나머지 10퍼센트정도라도 512로 학습을 해주어야 한다.
+
+
+
+
+/////////////////
+warmup step : https://zzaebok.github.io/deep_learning/RAdam/
+////////////////
+optimizer
+adam에서 warmup step이란것이 있음
+처음 bad local minumum에 빠지는 것을 막기 위해 learning rate를 서서히 target rate 까지 올리는것
+
+
+
+///////////////
+adamW : https://hiddenbeginner.github.io/deeplearning/paperreview/2019/12/29/paper_review_AdamW.html
+/////////////////
+
+
