@@ -14,8 +14,37 @@ lambda 함수 [https://wikidocs.net/64](https://wikidocs.net/64)
 
 
 ////////////////////////
-나눗셈 a/b에서 a,b가 모두 int(정수) 여도 답은 소숫점까지 포함되어 나온다.
+나눗셈 a/b에서 a,b가 모두 int(정수) 여도 답은 소숫점까지 포함되어 나온다.  
 ///////////////////////
 
+/////////////////////
+list를 사용할 때, c처럼 접근하면 안되는 부분 : https://power-of-optimism.tistory.com/123
+///////////////////////////////
+result = []
+result[0] = 1
 
-첫째 줄에 (A+B)%C, 둘째 줄에 ((A%C) + (B%C))%C, 셋째 줄에 (A×B)%C, 넷째 줄에 ((A%C) × (B%C))%C를 출력한다.
+==> 에러남 
+이유 : result에는 아무것도 없는데 0번위치에 접근하려 하니까
+
+그러므로 append나 insert아용해야함.  .append()  or .insert(위치,값)
+
+다른 방법
+result = []
+result = [0]*10   # 0이 들어가 있는 10개의 방 마련
+result[0] = 대입값
+
+
+
+
+////////////////
+빠른 입출력 :https://www.acmicpc.net/board/view/22716
+
+////////////////
+
+Python을 사용하고 있다면, input 대신 sys.stdin.readline을 사용할 수 있다. 
+단, 이때는 맨 끝의 개행문자까지 같이 입력받기 때문에 문자열을 저장하고 싶을 경우
+ .rstrip()을 추가로 해 주는 것이 좋다.
+
++ .rstrip() : https://codechacha.com/ko/python-string-strip/
+
+
