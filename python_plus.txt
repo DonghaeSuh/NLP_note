@@ -47,4 +47,21 @@ Python을 사용하고 있다면, input 대신 sys.stdin.readline을 사용할 �
 
 + .rstrip() : https://codechacha.com/ko/python-string-strip/
 
+++++.rstrip() 쓸때 주의점
+.rstrip()은 참조하려는 문자열을 복사 한다음 개행문자를 제거하는 것이므로, 원 문자열은 변하지 않는다. => 대입을 통해 새로 받아와야 한다.
+
+ex)
+import sys
+test =[]
+a= sys.stdin.readline()
+test.append(a.rstrip())
+b= sys.stdin.readline()
+b.rstrip()
+test.append(b)
+print(test)
+
+출력:
+hel
+lo
+['hel', 'lo\n']
 

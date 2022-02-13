@@ -32,3 +32,21 @@ for i in range(a):
     b+=i+1
 print(b)
 """
+
+#15552
+
+
+#+ .rstrip() test
+"""
+import sys
+test =[]
+a= sys.stdin.readline()
+test.append(a.rstrip())
+b= sys.stdin.readline()
+b.rstrip()
+test.append(b)
+print(test)
+"""
+
+
+
