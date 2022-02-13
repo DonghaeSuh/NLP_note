@@ -118,7 +118,7 @@ for i in range(1, n+1):
 
 #10871
 r,x=map(int,input().split())
-a=input().split()
+a=input().split()   #a = list(map(int, input().split())) 로 하면, list 내부의 원소 값이 정수일 경우 인식 가능
 for i in range(r):
     if int(a[i])<x:
         print(a[i],end=" ")
