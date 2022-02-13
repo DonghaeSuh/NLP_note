@@ -35,7 +35,6 @@ print(b)
 
 #15552
 
-
 #+ .rstrip() test
 """
 import sys
@@ -47,6 +46,80 @@ b.rstrip()
 test.append(b)
 print(test)
 """
+"""
+import sys
+r=int(sys.stdin.readline().rstrip())
+for i in range(r):
+    a,b=map(int,sys.stdin.readline().split())
+    print(a+b)
+"""
+
+#2741
+"""
+import sys
+r=int(input())
+for i in range(r):
+    print(i+1)
+"""
+"""
+[print(i) for i in range(1, int(input())+1)]
+"""
+
+#2742
+"""
+r=int(input())
+for i in range(r):
+    print(r-i)
+"""
+
+#11021
+"""
+r=int(input())
+for i in range(r):
+    a,b=map(int,input().split())
+    print(f"Case #{i+1}: {a+b}")
+"""
+
+#11022
+"""
+r=int(input())
+for i in range(r):
+    a,b=map(int,input().split())
+    print(f"Case #{i+1}: {a} + {b} = {a+b}")
+"""
 
 
+#2438
+"""
+r=int(input())
+for i in range(r):
+    for k in range(i+1):
+        print('*',end="")
+    print()
+"""
 
+#2439
+"""
+r=int(input())
+for i in range(1,r+1):
+    for j in range(r-i):
+        print(" ",end="")
+    for l in range(i):
+        print('*',end="")
+    print()
+"""
+
+"""
+출력에서 "문자열"*반복횟수  가 가능하다.
+n = int(input())
+for i in range(1, n+1):
+    print(" " * (n - i) + "*" * i)
+"""
+
+#10871
+r,x=map(int,input().split())
+a=input().split()
+for i in range(r):
+    if int(a[i])<x:
+        print(a[i],end=" ")
+        
