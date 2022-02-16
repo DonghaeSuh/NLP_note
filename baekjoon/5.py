@@ -77,3 +77,16 @@ print(len(li))
 """
 
 #1546
+"""
+n=int(input())
+s=list(map(int,input().split()))
+s.sort() # max() 써라 리스트니까
+
+f=[i/s[n-1]*100 for i in s]
+r=0
+for i in range(n):   # sum() 써라 리스트니까
+    r+=f[i]
+print(r/n)
+"""
+
+#8958
