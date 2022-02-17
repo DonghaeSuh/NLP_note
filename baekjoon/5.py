@@ -90,3 +90,27 @@ print(r/n)
 """
 
 #8958
+# OX값을 하나하나씩 list 값으로 받아 온다. 
+# 이후 하나하나 슬라이딩 하면서 count 값을 올리고 
+# X가 나오는 경우 값 저장 및 count 값을 초기화 시켜준다. 
+# (이는 len()값 만큼 반복한다)
+
+"""
+r=int(input())
+
+for i in range(r):
+    l = list(input())
+    c=0 #count
+    s=0 #sum
+    for k in range(len(l)):
+        if l[k]=="X":
+            c=0
+            continue
+        c+=1
+        s+=c
+    print(s)
+"""
+
+
+#4344
+
