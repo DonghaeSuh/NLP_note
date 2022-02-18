@@ -113,4 +113,17 @@ for i in range(r):
 
 
 #4344
+# 반복횟수받고 학생수 받은다음 
+# list로 점수 받고 sum/n으로 평균 구한다음 if 문으로 학생 명수 카운트=> 나누기
+"""
+a=int(input())
+for i in range(a):
+    r= list(map(int,input().split()))
+    m=sum(r[1:])/r[0]
+    c=0
+    for k in range(1,len(r)):
+        if r[k]>m:
+            c+=1
+    print(f"{c/r[0]*100:.3f}%")
 
+"""
