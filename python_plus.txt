@@ -191,7 +191,15 @@ print(type(a[0]))
 ['2', '0']
 <class 'str'>
 
-!!!!!!!!!!!!!!!!!정수, 문자열을 쓰면 하나하나씩 나뉘어서 list로 저장된다!!!!!!!!
+!!!!!!!!!!!!!!!!! 문자열을 쓰면 하나하나씩 나뉘어서 list로 저장된다!!!!!!!!
+정수는 안된다.
+
+그래서 정수 분리해서 int 형으로 원소를 넣어주려면
+i=정수
+a= list(str(i))
+a_=[int(i) for i in a]
+다음과 같이 해주어야 한다.
+
 
 
 ---------------------------------------------------
@@ -228,5 +236,39 @@ print(len(set(b)))
   + https://ojt90902.tistory.com/563 
 => 입력받는 값이 정수이면 저 round만으로 소숫점 표현 하지 못함=> 소숫점 항상 만들라면
  :.몇f 형태 이용
+
+-----------------------------------------
+집합 내용 복습 + 추가 내용:https://withcoding.com/77
+---------------------------------------
+
+//집함 (set) : 중복 안되고, 순서 없음
+
+my_set = {1,2,3,3,3}
+print(my_set) = 1,2,3
+
+집합 정의방법
+{} or set([]) :리스트로 만들고 set으로 감싸줌   # 나중에 리스트 정보를 집합으로 만들어 사용 가능
+
+java = {"a","b","c"}
+python =set(["a","d"])
+
+교집합
+
+print(java & python) = {'a'}       ( =   print(java.intersection(python))   )
+
+
+합집합
+ print( java | python)                (  =  print(java.union(python)    )
+
+
+차집합  (java 0     /  python  x  )
+print (java-python)   print(java.differrence(python))
+
+
+집합에 원소 추가
+python.add("김태호")
+
+집합에 원소 삭제
+java.remove("a")  
 
 
