@@ -7,7 +7,7 @@ https://dojang.io/mod/page/view.php?id=2179
 
 
 /////////////////////////
-내장함수 map [https://wikidocs.net/32](https://wikidocs.net/32)
+내장함수 map [https://wikidocs.net/32]
 
 lambda 함수 [https://wikidocs.net/64](https://wikidocs.net/64)
 //////////////////////////
@@ -273,7 +273,14 @@ java.remove("a")
 
 
 ------------------------------------------
-아스키 코드
+아스키 코드 : https://ddolcat.tistory.com/684
 ---------------------------------------
 chr() : 아스키-> 문자
 ord() : 문자 -> 아스키
+
+
+--------------------------------------------
+QR Code "alphanumeric" 문자는 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ\$%*+-./:
+----------------------------------------------
+
+
