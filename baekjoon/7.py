@@ -86,3 +86,9 @@ else :
     max_index = cnt_list.index(max(cnt_list))  # count 숫자 최대값 인덱스(위치)
     print(unique_words[max_index])
 """
+
+#1152
+"""
+a=input().split()
+print(len(a))
+"""
