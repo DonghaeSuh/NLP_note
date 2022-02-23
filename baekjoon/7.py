@@ -92,3 +92,19 @@ else :
 a=input().split()
 print(len(a))
 """
+
+#2908
+"""
+a,b=input().split()
+a_=reversed(list(a))
+b_=reversed(list(b))
+a__="".join(a_)
+b__="".join(b_)
+if (int(a__)<int(b__)):
+    print(int(b__))
+else:
+    print(int(a__))
+"""
+
+#5622
+
