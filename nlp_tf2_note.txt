@@ -3,3 +3,11 @@
 ======================
 각각 튜플형태 가변인자, 사전형태 가변인자
 
+===========================
+CNN 합성곱 연산 최적화 : https://www.slideshare.net/ssuser6135a1/designing-more-efficient-convolution-neural-network
+============================
+
+===========================
+파이썬 super()내부에 class 집어넣는 것 : https://harry24k.github.io/super/
+==============================
++ 매서드 self.  : https://wikidocs.net/28
