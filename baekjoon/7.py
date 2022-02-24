@@ -107,4 +107,25 @@ else:
 """
 
 #5622
+#문자열 저장한다음, 순서정보가지고 초계산, 구간 문자 넣음
+#3으로 나눈 몫 이용
+"""
+a="ABC,DEF,GHI,JKL,MNO,PQRS,TUV,WXYZ"
+d=list(input())
+r=[]
+for i in range(len(d)):
+    r.append(a[:a.find(d[i])].count(',')+3) # ,가 몇개 있는지 그에따른 필요 시간
+print(sum(r)) 
+"""
+"""
+dial = ['ABC', 'DEF', 'GHI', 'JKL', 'MNO', 'PQRS', 'TUV', 'WXYZ']
+string = input()
+time = 0
 
+for i in range(len(dial)):
+    for s in string:
+        if s in dial[i]:
+            time += 3+i
+
+print(time)
+"""
