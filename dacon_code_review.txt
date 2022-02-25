@@ -132,7 +132,7 @@ tokens : 리스트 형태로, 전처리 되어 형태소 단위로 분리(띄어
 
 Tokenizer와 to_categorical 이용
 t = Tokenizer
-t.fit_on_tokens(tokens) : 각 토큰에게 고유의 정수 부여 => 하나하나씩
+t.fit_on_texts(tokens) : 각 토큰에게 고유의 정수 부여 => 하나하나씩
 => 이 내용은 t.word_index 에 사전형태로 저장된다.
 
 정수로 표시한 문장 = t.text_to_sequences(tokens)[몇번째 문장] : 해당 문장을 부여된 정수로 표시 

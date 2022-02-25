@@ -11,3 +11,19 @@ CNN 합성곱 연산 최적화 : https://www.slideshare.net/ssuser6135a1/designi
 파이썬 super()내부에 class 집어넣는 것 : https://harry24k.github.io/super/
 ==============================
 + 매서드 self.  : https://wikidocs.net/28
+
+
+===========================
+jason 파일에 대하여 : https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=demonic3540&logNo=221277604043
+===============================
+
+=============================
+defaultdict(int) 에 대하여 : https://dongdongfather.tistory.com/69
+==============================
+
+================================
+tf
+https://github.com/keras-team/keras-docs-ko
+https://github.com/keras-team/keras-docs-ko/blob/master/sources/preprocessing/text.md
+
+https://machinelearningknowledge.ai/keras-tokenizer-tutorial-with-examples-for-fit_on_texts-texts_to_sequences-texts_to_matrix-sequences_to_matrix/#Example_1_sequences_to_matrix_with_mode_binary
