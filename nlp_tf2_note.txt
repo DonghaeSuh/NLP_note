@@ -27,3 +27,19 @@ https://github.com/keras-team/keras-docs-ko
 https://github.com/keras-team/keras-docs-ko/blob/master/sources/preprocessing/text.md
 
 https://machinelearningknowledge.ai/keras-tokenizer-tutorial-with-examples-for-fit_on_texts-texts_to_sequences-texts_to_matrix-sequences_to_matrix/#Example_1_sequences_to_matrix_with_mode_binary
+
+==============================
+
+
+==========================
+with ~ as ~   : https://ybworld.tistory.com/116  
+======================
+open 이 쓰이는 경우 말고 그냥 class가 들어가서 쓰이고 닫는 경우도 가능
+
+
+=================
+A Gentle Introduction to Mini-Batch Gradient Descent and How to Configure Batch Size 
+: https://machinelearningmastery.com/gentle-introduction-mini-batch-gradient-descent-configure-batch-size/
+
+Difference Between a Batch and an Epoch in a Neural Network
+: https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/
