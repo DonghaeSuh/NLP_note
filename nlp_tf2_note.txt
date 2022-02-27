@@ -3,9 +3,16 @@
 ======================
 각각 튜플형태 가변인자, 사전형태 가변인자
 
+
+
+
 ===========================
 CNN 합성곱 연산 최적화 : https://www.slideshare.net/ssuser6135a1/designing-more-efficient-convolution-neural-network
 ============================
+
+
+
+
 
 ===========================
 파이썬 super()내부에 class 집어넣는 것 : https://harry24k.github.io/super/
@@ -13,13 +20,24 @@ CNN 합성곱 연산 최적화 : https://www.slideshare.net/ssuser6135a1/designi
 + 매서드 self.  : https://wikidocs.net/28
 
 
+
+
+
 ===========================
 jason 파일에 대하여 : https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=demonic3540&logNo=221277604043
 ===============================
 
+
+
+
+
 =============================
 defaultdict(int) 에 대하여 : https://dongdongfather.tistory.com/69
 ==============================
+
+
+
+
 
 ================================
 tf
@@ -31,10 +49,19 @@ https://machinelearningknowledge.ai/keras-tokenizer-tutorial-with-examples-for-f
 ==============================
 
 
+
+
+
 ==========================
 with ~ as ~   : https://ybworld.tistory.com/116  
-======================
+
 open 이 쓰이는 경우 말고 그냥 class가 들어가서 쓰이고 닫는 경우도 가능
+
+====================================================
+
+
+
+
 
 
 =================
@@ -43,3 +70,38 @@ A Gentle Introduction to Mini-Batch Gradient Descent and How to Configure Batch 
 
 Difference Between a Batch and an Epoch in a Neural Network
 : https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/
+
+미니 배치
+https://89douner.tistory.com/43
+
+https://www.kakaobrain.com/blog/113
+===============================
+
+
+
+
+
+
+===========================
+keras Adam class : https://keras.io/api/optimizers/adam/
+
+tf.keras.optimizers.Adam(
+    learning_rate=0.001,
+    beta_1=0.9,
+    beta_2=0.999,
+    epsilon=1e-07,
+    amsgrad=False,
+    name="Adam",
+    **kwargs
+)
+
+==========케라스 모델에 관해 : https://keras.io/ko/models/about-keras-models/======================
+
+
+
+=======================
+@classmethod : https://frenchkebab.tistory.com/56
+
+
+==========================
+

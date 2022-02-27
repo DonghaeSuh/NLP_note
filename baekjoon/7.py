@@ -132,9 +132,50 @@ print(time)
 
 #2941
 # 긴 단어가 1개로 간주되어야 하므로 1개영역을 차지하는 문자로 바꿔준다.
+"""
 c = ['c=', 'c-', 'dz=', 'd-', 'lj', 'nj', 's=', 'z=']
 word = input()
 
 for i in c :
     word = word.replace(i, '*')  # input 변수와 동일한 이름의 변수
 print(len(word))
+"""
+
+#1316
+#분류를 해야한다.
+#처음 문자는 저장하고 슬라이싱하다가 그 다음이 다른문자이면 그 다음문자를 집합에 추가하자
+# 집합을 추가 할 때, 이미 집합에 존재하면, 에러가 있는 정보라는 것을 변수에 저장 => 끝나고 에러있는 것은 카운트하지 않음
+"""
+a=int(input())
+c=0
+for i in range(a):
+    b=input()
+    r=set()
+    r.add(b[0])
+    e=0
+    for k in range(len(b)-1):
+        if b[k]!=b[k+1]:
+            if b[k+1] in r:
+                e=1
+            else:
+                r.add(b[k])
+    if e==0:
+        c+=1
+print(c)
+"""
+"""
+n = int(input())
+
+group_word = 0
+for _ in range(n):
+    word = input()
+    error = 0
+    for index in range(len(word)-1):  # 인덱스 범위 생성 : 0부터 단어개수 -1까지 
+        if word[index] != word[index+1]:  # 연달은 두 문자가 다른 때,
+            new_word = word[index+1:]  # 현재글자 이후 문자열을 새로운 단어로 생성
+            if new_word.count(word[index]) > 0:  # 남은 문자열에서 현재글자가 있있다면
+                error += 1  # error에 1씩 증가.
+    if error == 0:  
+        group_word += 1  # error가 0이면 그룹단어
+print(group_word)
+"""
