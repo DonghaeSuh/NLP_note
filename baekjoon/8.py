@@ -30,3 +30,31 @@ while n > nums :
     cnt += 1  
 print(cnt)
 """
+
+#1193
+#2,3,4,5.. 대각선 합이 이래 늘어남.
+# while이용해 푼다.
+
+n=int(input())
+c=1
+num=1
+while(n>num):
+    c+=1
+    num=(c)*(c+1)/2
+if (c)%2 ==0:
+    print(round(c-(num-n)),'/',round(1+(num-n)),sep="")
+else:
+    print(round(1+(num-n)),'/',round(c-(num-n)),sep="")
+
+"""
+n = int(input())
+i = 1
+while n > i:
+    n -= i
+    i +=1
+    
+if i % 2:
+    print(i+1-n, '/', n, sep = '')
+else:
+    print(n, '/', i+1-n, sep = '')
+"""
