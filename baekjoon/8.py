@@ -34,7 +34,7 @@ print(cnt)
 #1193
 #2,3,4,5.. 대각선 합이 이래 늘어남.
 # while이용해 푼다.
-
+"""
 n=int(input())
 c=1
 num=1
@@ -45,7 +45,7 @@ if (c)%2 ==0:
     print(round(c-(num-n)),'/',round(1+(num-n)),sep="")
 else:
     print(round(1+(num-n)),'/',round(c-(num-n)),sep="")
-
+"""
 """
 n = int(input())
 i = 1
@@ -58,3 +58,17 @@ if i % 2:
 else:
     print(n, '/', i+1-n, sep = '')
 """
+
+#2869
+#낮이 밤보다 1 많다.
+"""
+import sys
+a,b,c=map(int,sys.stdin.readline().split())
+d=1
+while (a*d-b*(d-1))<c:
+    d+=1
+print(d)
+"""
+a,b,v = map(int,input().split())
+k = (v-b)/(a-b)
+print(int(k) if k == int(k) else int(k)+1)
