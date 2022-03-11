@@ -120,3 +120,64 @@ np.mean(a == b)
 iloc(), loc() : https://gagadi.tistory.com/16
 ==============================
 iloc은 index를 통한 접근, loc은 label을 통한 접근
+
+=============================
+사전 정렬 : https://rfriend.tistory.com/473
+============================
+sorted(dict.items()) : key 정렬 => 오름차순  + 안에 reverse=True 해주면 내림차순
+
+value 정렬
+sorted(dict.items(), key=lambda item : item[1])    +  안에 reverse=True 해주면 내림차순
+
+
+
+=================================
+NLTK FreqDist() : https://datascienceschool.net/03%20machine%20learning/03.01.01%20NLTK%20%EC%9E%90%EC%97%B0%EC%96%B4%20%EC%B2%98%EB%A6%AC%20%ED%8C%A8%ED%82%A4%EC%A7%80.html#freqdist
+문서에 사용된 토큰의 갯수, 특정 토큰의 출현횟수, 출현 확률 , 가장 추련 횟수가 높은 단어 (top 정수)
+
+from nltk import FreqDist
+
+stopwords = ["Mr.", "Mrs.", "Miss", "Mr", "Mrs", "Dear"]
+emma_tokens = pos_tag(retokenize.tokenize(emma_raw))
+names_list = [t[0] for t in emma_tokens if t[1] == "NNP" and t[0] not in stopwords]
+fd_names = FreqDist(names_list)
+
+fd_names.N(), fd_names["Emma"], fd_names.freq("Emma")
+=> (7863, 830, 0.10555767518758744)
+FreqDist 클래스는 단어를 키(key), 출현빈도를 값(value)으로 가지는 사전 자료형과 유사하다. 다음 코드는 전체 단어의 수, “Emma”라는 단어의 출현 횟수, 확률을 각각 계산한다.
+
+most_common 메서드를 사용하면 가장 출현 횟수가 높은 단어를 찾는다.
+fd_names.most_common(5)
+=> [('Emma', 830),
+ ('Harriet', 491),
+ ('Weston', 439),
+ ('Knightley', 389),
+ ('Elton', 385)]
+
+
+
+========================================
+
+
+
+
+========================================
+.reduce() 함수: https://wikidocs.net/109305
+https://wikidocs.net/64
+======================================
+
+
+==========================================
+
+with tarfile.open()
+==================================
+
+
+=====================================
+datafram.apply() :https://kibua20.tistory.com/194
+====================
+
+===========================
+matplot으로 이미지 : https://www.delftstack.com/ko/howto/matplotlib/display-an-image-with-matplotlib-python/
+==============================
+
